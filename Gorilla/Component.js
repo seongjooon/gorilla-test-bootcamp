@@ -6,6 +6,24 @@ import SUPPORTED_DOM_EVENTS from './utils/supportedDOMEvents';
 // TODO: Complete the constructor function
 function Component(template, context, children) {
   // Your code here..
+  this._view = new View(template, { context, children });
+  this._publish = lifecycleEventsMixin(this);
+  this._element = null;
+
+  for (let props in context) {
+    if (context.hasOwnProperty(props)) {
+      Object.defineProperty(this, props, {
+        get: function () {
+          return context[props];
+        },
+        set: function (value) {
+          context[props] = value,
+            this.render();
+        },
+        enumerable: true
+      });
+    }
+  }
 }
 
 Component.prototype._initializeDOMEvents = function () {

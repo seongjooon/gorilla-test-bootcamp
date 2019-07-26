@@ -37,6 +37,8 @@ describe('2. lifecycleEventsMixin',  () => {
     });
 
     test('프로토타입 체인으로 접근할 수 없다', () => {
+      lifecycleEventsMixin(component);
+
       expect(Component.prototype).not.toHaveProperty('on');
       expect(component).toHaveProperty('on');
     });

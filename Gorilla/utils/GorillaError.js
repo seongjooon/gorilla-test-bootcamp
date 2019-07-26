@@ -1,6 +1,11 @@
 // TODO: Fill in the constructor function
-function GorillaError (message) {
+function GorillaError(message) {
   // Your code here..
+  Error.call(this);
+  this.message = message;
 }
+
+GorillaError.prototype = Object.create(Error.prototype);
+GorillaError.prototype.constructor = GorillaError; 
 
 export default GorillaError;
