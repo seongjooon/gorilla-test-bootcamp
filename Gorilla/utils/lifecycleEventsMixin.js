@@ -11,29 +11,30 @@ export const eventMap = {};
 // TODO: Fill in the mixin function
 export default function eventEmitterMixin(target) {
   // Your code here..
+  const eventArr = [];
+  let flag = false;
+
   if (!target instanceof Component) {
     throw new Error();
   }
 
   target.on = function (event, callback) {
-    if (COMPONENT_LIFECYCLE_EVENTS.indexOf(event) === -1) {
+    for (let i = 0; i < COMPONENT_LIFECYCLE_EVENTS.length; i++) {
+      if (event === COMPONENT_LIFECYCLE_EVENTS[i]) {
+        flag = true;
+      }
+    }
+
+    if (flag === false) {
       throw new Error();
+    } else if (flag === true) {
+      eventArr.push(callback);
     }
-
-    if (!eventMap[event]) {
-      eventMap[event] = [];
-      eventMap[event].push(callback);
-    } else {
-      eventMap[event].push(callback);
-    }
-
-    return;
-  }
+  };
 
   return function () {
-    const eventMapValues = Object.values(eventMap);
-    eventMapValues[0].forEach(callback => {
-      callback();
-    });
-  }
+    for (let i = 0; i < eventArr.length; i++) {
+      eventArr[i]();
+    }
+  };
 }
