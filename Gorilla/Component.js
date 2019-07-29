@@ -18,7 +18,7 @@ function Component(template, context, children) {
         },
         set: function (value) {
           context[props] = value,
-            this.render();
+          this.render();
         },
         enumerable: true
       });

@@ -1,7 +1,6 @@
 // TODO: Fill in the constructor function
 function GorillaError(message) {
   // Your code here..
-  Error.call(this);
   this.message = message;
 }
 
